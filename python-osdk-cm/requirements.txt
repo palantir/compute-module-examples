@@ -1,0 +1,5 @@
+pokemon_app_sdk==0.17.0
+foundry-compute-modules
+notebook
+pandas
+pytest
