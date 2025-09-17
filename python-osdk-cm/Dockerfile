@@ -19,7 +19,7 @@ COPY requirements.txt .
 # IMPORTANT: Use --mount=type=secret to securely access your dependency
 RUN --mount=type=secret,id=FOUNDRY_TOKEN,env=FOUNDRY_TOKEN \
     pip install -r requirements.txt --upgrade \
-    --extra-index-url "https://user:$FOUNDRY_TOKEN@stack.palantirfoundry.com/artifacts/api/repositories/ri.artifacts.main.repository.8d6eacb5-058c-47c7-a601-cf38cf76de8f/contents/release/pypi/simple" \\
+    --index-url "https://user:$FOUNDRY_TOKEN@stack.palantirfoundry.com/artifacts/api/repositories/ri.artifacts.main.repository.8d6eacb5-058c-47c7-a601-cf38cf76de8f/contents/release/pypi/simple" \\
     --extra-index-url "https://user:$FOUNDRY_TOKEN@stack.palantirfoundry.com/artifacts/api/repositories/ri.foundry-sdk-asset-bundle.main.artifacts.repository/contents/release/pypi/simple"
 
 COPY src .
