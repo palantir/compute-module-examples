@@ -16,10 +16,11 @@ from compute_modules.auth import oauth
 
 
 # [SETUP REQUIRED] Add Foundry URL to your container's env vars
-BASE_URL = f"https://{os.getenv('FOUNDRY_URL')}"
+FOUNDRY_URL = os.getenv('FOUNDRY_URL')
+BASE_URL = f"https://{FOUNDRY_URL}"
 
 # [SETUP REQUIRED] Share the dataset you want to read/write from with your service user inside Foundry
-TOKEN = oauth(BASE_URL, ["api:datasets-read", "api:datasets-write"])
+TOKEN = oauth(FOUNDRY_URL, ["api:datasets-read", "api:datasets-write"])
 
 
 logger = get_logger(__name__)
