@@ -11,7 +11,7 @@ import os
 
 from dataclasses import dataclass
 from compute_modules.logging import get_logger
-from compute_modules.annotations
+from compute_modules.annotations import function
 from compute_modules.auth import oauth
 
 
@@ -52,6 +52,7 @@ Write a file to a dataset.
 
 https://www.palantir.com/docs/foundry/api/v2/datasets-v2-resources/files/upload-file/
 """
+@function
 def upload_file(context, event: UploadFileRequest) -> UploadFileResponse:
     logger.info(f"Uploading file to {event.file_path}")
     url = f"{BASE_URL}/api/v2/datasets/{event.dataset_rid}/files/{event.file_path}/upload"
@@ -72,6 +73,7 @@ Read contents of a file written to a dataset.
 
 https://www.palantir.com/docs/foundry/api/v2/datasets-v2-resources/files/get-file-content/
 """
+@function
 def get_file(context, event: GetFileRequest) -> GetFileResponse:
     logger.info(f"Getting file from {event.file_path}")
     url = f"{BASE_URL}/api/v2/datasets/{event.dataset_rid}/files/{event.file_path}/content"
