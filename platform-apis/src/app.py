@@ -15,11 +15,12 @@ from compute_modules.annotations
 from compute_modules.auth import oauth
 
 
-# [SETUP REQUIRED] Share the dataset you want to read/write from with your service user inside Foundry
-TOKEN = oauth("swirl.palantirfoundry.com", ["api:datasets-read", "api:datasets-write"])
-
 # [SETUP REQUIRED] Add Foundry URL to your container's env vars
 BASE_URL = f"https://{os.getenv('FOUNDRY_URL')}"
+
+# [SETUP REQUIRED] Share the dataset you want to read/write from with your service user inside Foundry
+TOKEN = oauth(BASE_URL, ["api:datasets-read", "api:datasets-write"])
+
 
 logger = get_logger(__name__)
 logger.setLevel(logging.INFO)
