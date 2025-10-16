@@ -45,7 +45,7 @@ class GetFileRequest:
 @dataclass
 class GetFileResponse:
     status: int
-    file_content: bytes
+    file_content: str
 
 
 """
@@ -55,7 +55,7 @@ https://www.palantir.com/docs/foundry/api/v2/datasets-v2-resources/files/upload-
 """
 @function
 def upload_file(context, event: UploadFileRequest) -> UploadFileResponse:
-    logger.info(f"Uploading file to {event.file_path}")
+    logger.info(f"Uploading file to path: {event.file_path}")
     url = f"{BASE_URL}/api/v2/datasets/{event.dataset_rid}/files/{event.file_path}/upload"
     response = requests.post(
         url,
@@ -83,21 +83,20 @@ def get_file(context, event: GetFileRequest) -> GetFileResponse:
         url,
         headers={"Authorization": f"Bearer {TOKEN}"},
     )
+    logger.info(dataset_response.content.decode('utf-8'))
     return GetFileResponse(
         status=dataset_response.status_code,
-        file_content=dataset_response.content
-        )
+        file_content=dataset_response.content.decode('utf-8')
+    )
 
 
 # EXAMPLE USAGE:
 # if __name__ == "__main__":
-#     file_path = "myfilename.csv"
-#     file_content = b"this is my file content"
-
-#     UPLOAD YOUR FILE TO THE DATASET
-#     upload_response = upload_file({}, UploadFileRequest(dataset_rid="ri.foundry.main.dataset.7eed06cf-3c86-4916-8237-09d17ae30f98", file_path=file_path, file_content=file_content))
-#     assert(upload_response.status == 200)
-
-#     READ FILE CONTENT FROM THE DATASET 
-#     response = get_file({}, GetFileRequest(dataset_rid="ri.foundry.main.dataset.7eed06cf-3c86-4916-8237-09d17ae30f98", file_path=file_path))
-#     assert(response.file_content == file_content)
+    # file_path = "myfilename.csv"
+    # file_content = b"this is my file content"
+    # UPLOAD YOUR FILE TO THE DATASET
+    # upload_response = upload_file({}, UploadFileRequest(dataset_rid="ri.foundry.main.dataset.7eed06cf-3c86-4916-8237-09d17ae30f98", file_path=file_path, file_content=file_content))
+    # assert(upload_response.status == 200)
+    # READ FILE CONTENT FROM THE DATASET 
+    # response = get_file({}, GetFileRequest(dataset_rid="ri.foundry.main.dataset.7eed06cf-3c86-4916-8237-09d17ae30f98", file_path=file_path))
+    # assert(response.file_content == file_content)
