@@ -1,0 +1,13 @@
+{
+  "fileHidePatterns": [
+    "gradle/**/*",
+    "**/*gradle*",
+    "**/.*",
+    "repoConfig.json",
+    "ci.yml",
+    "templateConfig.json",
+    "cli",
+    "cli/**/*",
+    "build_plan.yml"
+  ]
+}

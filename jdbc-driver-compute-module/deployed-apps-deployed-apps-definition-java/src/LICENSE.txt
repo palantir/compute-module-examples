@@ -1,0 +1,43 @@
+COPYRIGHT (c) 2023 PALANTIR TECHNOLOGIES INC.
+
+THE DOCUMENTS AND/OR SOFTWARE ACCOMPANYING THIS FILE CONTAIN PROPRIETARY AND
+CONFIDENTIAL INFORMATION OWNED BY PALANTIR TECHNOLOGIES INC.
+UNAUTHORIZED DISCLOSURE TO ANY THIRD PARTY IS STRICTLY PROHIBITED.
+
+For good and valuable consideration, the receipt and adequacy of which
+is acknowledged by Palantir and recipient of these files ("Recipient"), the
+parties agree as follows:
+
+These files are being provided subject to the non-disclosure terms by
+and between Palantir Technologies Inc. and Recipient.
+
+Palantir solely shall own and hereby retains all rights, title and
+interest in and to these files (including, without limitation,
+all patent, copyright, trademark, trade secret and other intellectual
+property rights) and all copies, modifications and derivative works thereof.
+Recipient shall and hereby does irrevocably transfer and assign to Palantir
+all right, title and interest it may have in the foregoing to Palantir and
+Palantir hereby accepts such transfer.  In using these files, Recipient
+acknowledges that no ownership rights are being conveyed to Recipient.  These
+files shall only be used in conjunction with properly licensed Palantir
+products or services.
+
+Recipient will not (and will not allow any third party to): (i) reverse engineer
+or attempt to discover any source code or underlying ideas or algorithms of any
+of these materials; (ii) provide, lease, lend, use for timesharing or service
+bureau purposes or otherwise use or allow others to use these materials for the benefit
+of any third party; (iii) allow the transfer, transmission, export, or re-export
+of any materials (or any portion thereof) or any Palantir technical data; or (iv)
+perform benchmark tests without the prior written consent of Palantir (any results
+of such permitted benchmark testing shall be deemed Confidential Information of
+Palantir).
+
+THIS SOFTWARE IS PROVIDED BY PALANTIR "AS IS" AND ANY EXPRESS OR IMPLIED
+WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
+EVENT SHALL PALANTIR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT
+OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.

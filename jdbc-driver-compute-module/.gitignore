@@ -1,0 +1,42 @@
+# IntelliJ
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# Eclipse
+.classpath
+.checkstyle
+.factorypath
+.project
+.settings
+.ecbuild
+
+# Vim
+*.sw[op]
+
+# Visual Studio Code
+.vscode/
+
+# Codegen
+.generated
+.apt_generated
+generated_src/
+generated-src/
+generated_testSrc/
+**/src/generated/
+
+# OS X
+.DS_Store
+
+# Java
+*.class
+
+# Build Systems
+.gradle/
+bin/
+build/
+out/
+errors.json
+
+gradle/wrapper/gradle-wrapper.properties
