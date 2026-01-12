@@ -1,0 +1,72 @@
+# DO NOT MODIFY OR DELETE THIS FILE.
+#
+# ANY CHANGES MAY RESULT IN SERIOUS DAMAGE
+# TO THE TECHNICAL INFRASTRUCTURE AND LOSS OF DATA!
+#
+# ACCESS TO OR USE OF PALANTIR FOUNDRY IS SUBJECT
+# TO PALANTIR’S TECHNICAL SPECIFICATIONS AVAILABLE
+# IN THE DOCUMENTATION. THIS WARNING CONSTITUTES AN
+# ADDITION TO THOSE TECHNICAL SPECIFICATIONS AND
+# NON-COMPLIANCE MAY CONSTITUTE A VIOLATION OF
+# THE FOUNDRY LICENSE AGREEMENT.
+
+java-version: java_21
+
+env:
+  gradleDistributionUrl:
+    uri-role: gradle-distribution-8-12-1
+  ORG_GRADLE_PROJECT_build2Uri:
+    uri-role: build2-api
+  ORG_GRADLE_PROJECT_compassUri:
+    uri-role: compass-api
+  ORG_GRADLE_PROJECT_jemmaUri:
+    uri-role: jemma-api
+  ORG_GRADLE_PROJECT_artifactsUri:
+    uri-role: foundry-artifacts-api
+  ORG_GRADLE_PROJECT_foundryCatalogUri:
+    uri-role: foundry-catalog-api
+  ORG_GRADLE_PROJECT_jemmaLogReceiverUri:
+    uri-role: log-receiver-api-jemma-alias
+  ORG_GRADLE_PROJECT_mavenProxyRepoUri:
+    uri-role: maven-repository-proxy-authz
+  ORG_GRADLE_PROJECT_condaInstallerUri:
+    uri-role: mamba-installer8
+  ORG_GRADLE_PROJECT_shrinkwrapServiceUri:
+    uri-role: shrinkwrap-service-api
+  ORG_GRADLE_PROJECT_foundryTelemetryServiceUri:
+    uri-role: foundry-telemetry-service-api
+  ORG_GRADLE_PROJECT_stemmaGit:
+    uri-role: stemma-git
+  ORG_GRADLE_PROJECT_moduleGroupServiceUri:
+    uri-role: contour-backend-multiplexer-api
+  ORG_GRADLE_PROJECT_dockerRegistry:
+    uri-role: foundry-artifacts-docker-registry
+  ORG_GRADLE_PROJECT_condaRepositoryProxyApiUri:
+    uri-role: conda-repository-proxy-authz-api
+
+required-job-token-capabilities:
+  - deployed-apps
+
+jobs:
+  foundry-publish:
+    timeout: 20 minutes
+    steps:
+      - |
+        set -euo pipefail
+        unset SUDO_UID SUDO_GID SUDO_USER
+        [[ -n "${JAVA_HOME-}" && -d "$JAVA_HOME" ]] || {
+            echo "JAVA_HOME was not set or did not point to a valid directory."
+            exit 1
+        }
+        export JAVA_OPTS="-Xmx512m -Djavax.net.ssl.trustStore=${STEMMA_DEFAULT_TRUST_STORE_PATH} -Dfile.encoding=UTF8 --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.lang.invoke=ALL-UNNAMED --add-opens=java.base/java.io=ALL-UNNAMED --add-opens=java.base/java.net=ALL-UNNAMED --add-opens=java.base/java.nio=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/java.util.concurrent=ALL-UNNAMED --add-opens=java.base/sun.nio.ch=ALL-UNNAMED --add-opens=java.base/sun.nio.cs=ALL-UNNAMED --add-opens=java.base/sun.security.action=ALL-UNNAMED --add-opens=java.base/sun.util.calendar=ALL-UNNAMED"
+        export ORG_GRADLE_PROJECT_trustStore="${STEMMA_DEFAULT_TRUST_STORE_PATH}"
+        export ORG_GRADLE_PROJECT_bearerToken="${JOB_TOKEN}"
+        export ORG_GRADLE_PROJECT_repoRid="${REPOSITORY_RID}"
+        export ORG_GRADLE_PROJECT_mavenProxyRepoUri="${ORG_GRADLE_PROJECT_artifactsUri}/repositories/${REPOSITORY_RID}/contents/release/maven"
+        export GRADLE_OPTS="-Dgradle.wrapperUser='' -Dgradle.wrapperPassword=${JOB_TOKEN}"
+        export ORG_GRADLE_PROJECT_autoConfigureBackingRepositories="true"
+        export ORG_GRADLE_PROJECT_branchIsProtected=${JEMMA_IS_PROTECTED_BRANCH:-"false"}
+
+        # For more detailed output from CI checks, add "--info" to the end of the "./gradlew" command below.
+        ./gradlew --no-daemon --build-cache --stacktrace deployedApps
+        

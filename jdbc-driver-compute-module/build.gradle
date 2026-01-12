@@ -1,0 +1,21 @@
+// DO NOT MODIFY THIS FILE
+buildscript {
+    repositories {
+        maven {
+            credentials {
+                username ''
+                password project.bearerToken
+            }
+            authentication {
+                basic(BasicAuthentication)
+            }
+            url project.mavenProxyRepoUri
+        }
+    }
+
+    dependencies {
+        classpath "com.palantir.deployed-apps:deployed-apps-gradle-plugins:${deployedAppsVersion}"
+    }
+}
+
+apply plugin: 'com.palantir.deployed-apps'

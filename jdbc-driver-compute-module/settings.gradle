@@ -1,0 +1,26 @@
+// DO NOT MODIFY THIS FILE
+// Replace all non-alphanumeric characters with dashes, and remove repeating dashes
+rootProject.name = rootProjectName.replaceAll("[^a-zA-Z\\d]", "-").replaceAll("-+", "-")
+
+rootProject.projectDir.eachDir { dir ->
+    if (file("${dir}/build.gradle").exists()) {
+        include dir.name
+    }
+}
+
+if (hasProperty('artifactsUri')) {
+    buildCache {
+        local {
+            enabled = !System.getenv().containsKey("CI")
+        }
+        remote(HttpBuildCache) {
+            enabled = !System.getenv().containsKey("JEMMA_RUN_WITHOUT_CACHES")
+            push = System.getenv().containsKey("CI")
+            url = "${artifactsUri}/repositories/${repoRid}/contents/release/gradle/"
+            credentials {
+                username = ''
+                password = bearerToken
+            }
+        }
+    }
+}

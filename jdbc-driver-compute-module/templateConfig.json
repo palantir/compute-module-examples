@@ -1,0 +1,10 @@
+{
+  "parentTemplateId" : "deployed-apps",
+  "childTemplatesByPath" : {
+    "deployed-apps-deployed-apps-definition-java" : "deployed-apps-definition-java"
+  },
+  "parentTemplateVersion" : "0.355.0",
+  "childTemplateVersionsByPath" : {
+    "deployed-apps-deployed-apps-definition-java" : "0.355.0"
+  }
+}
