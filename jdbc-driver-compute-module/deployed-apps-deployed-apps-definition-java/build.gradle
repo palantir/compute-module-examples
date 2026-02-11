@@ -1,0 +1,85 @@
+/*
+ * (c) Copyright 2026 Palantir Technologies Inc. All rights reserved.
+ */
+
+// DO NOT MODIFY THIS FILE
+buildscript {
+    repositories {
+        maven {
+            credentials {
+                username ''
+                password project.bearerToken
+            }
+            authentication {
+                basic(BasicAuthentication)
+            }
+            url project.mavenProxyRepoUri
+        }
+    }
+
+    dependencies {
+        classpath "com.palantir.deployed-apps:deployed-apps-gradle-plugins:${deployedAppsVersion}"
+    }
+}
+
+apply plugin: 'com.palantir.deployed-apps-definition-java'
+
+repositories {
+    maven {
+        credentials {
+            username ''
+            password project.bearerToken
+        }
+        authentication {
+            basic(BasicAuthentication)
+        }
+        url project.mavenProxyRepoUri
+    }
+}
+dependencies {
+    // PostgreSQL JDBC Driver (downloaded and placed in libs/)
+    // This approach works for any JDBC driver, including those not available on Maven
+    implementation files('libs/postgresql-42.7.4.jar')
+
+    // JSON parsing (for reading credentials)
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.0'
+
+    // Logging: SLF4J API only - runtime provides Log4j2 implementation
+    compileOnly 'org.slf4j:slf4j-api:1.7.36'
+}
+
+tasks.publishJavaDeployedApp.dependsOn tasks.check
+
+// Please see gradle.properties in the root dir to change any relevant fields
+tasks.publishJavaDeployedApp {
+    registry = dockerRegistry
+    repositoryRid = repoRid
+    bearerToken = project.bearerToken
+    baseImage = baseImageName
+    baseImageVersion = baseImageTag
+    imageName = userImageName
+    imageVersion = gitVersion()
+    imageLabels = [
+    : // placeholder for empty map; remove when adding labels
+    // 'maintainer' : 'John Doe <john.doe@example.com>',
+    ]
+    targetArtifactRid = repoRid
+}
+
+publishJavaDeployedApp.onlyIf(_task -> versionDetails().commitDistance == 0)
+
+test {
+    testLogging {
+        // Include test logs in console output
+        showStandardStreams = true
+        exceptionFormat = "full"
+    }
+    reports {
+        html.required = false
+        junitXml.required = false
+    }
+    // Allow running both JUnit4 and Junit5 tests
+    useJUnitPlatform {
+        includeEngines 'junit-jupiter', 'junit-vintage'
+    }
+}
